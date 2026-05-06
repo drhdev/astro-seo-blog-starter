@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ThemeScript from "../components/theme/ThemeScript.astro";
 import SiteHeader from "../components/site/SiteHeader.astro";
 import SiteFooter from "../components/site/SiteFooter.astro";
 import SeoHead from "../components/seo/SeoHead.astro";
@@ -20,15 +21,16 @@ interface Props {
 const { title, description, canonical, ogType, ogImage, ogImageAlt, jsonLd = [], noindex } = Astro.props;
 ---
 <!doctype html>
-<html lang="de">
+<html lang="de" class="bg-background text-foreground antialiased">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <ThemeScript />
     <SeoHead title={title} description={description} canonical={canonical} ogType={ogType} ogImage={ogImage} ogImageAlt={ogImageAlt} noindex={noindex} />
     <JsonLd data={websiteJsonLd()} />
     {jsonLd.map((data) => <JsonLd data={data} />)}
   </head>
-  <body>
+  <body class="min-h-screen bg-background text-foreground">
     <SiteHeader />
     <main>
       <slot />

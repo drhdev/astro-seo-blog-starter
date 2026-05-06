@@ -1,0 +1,53 @@
+<div class="inline-flex rounded-lg border border-border bg-background p-1 text-xs font-medium text-muted-foreground" data-theme-toggle>
+  <button type="button" data-theme-value="system" class="rounded-md px-2.5 py-1.5 transition hover:bg-accent hover:text-accent-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" aria-label="System-Theme verwenden">System</button>
+  <button type="button" data-theme-value="light" class="rounded-md px-2.5 py-1.5 transition hover:bg-accent hover:text-accent-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" aria-label="Light Mode verwenden">Light</button>
+  <button type="button" data-theme-value="dark" class="rounded-md px-2.5 py-1.5 transition hover:bg-accent hover:text-accent-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" aria-label="Dark Mode verwenden">Dark</button>
+</div>
+
+<script is:inline>
+  (() => {
+    const key = "theme";
+    const root = document.documentElement;
+    const toggles = document.querySelectorAll("[data-theme-toggle]");
+    const getMode = () => {
+      try {
+        const stored = localStorage.getItem(key);
+        return stored === "light" || stored === "dark" ? stored : "system";
+      } catch {
+        return "system";
+      }
+    };
+    const setMode = (mode) => {
+      try {
+        if (mode === "light" || mode === "dark") {
+          localStorage.setItem(key, mode);
+          root.dataset.theme = mode;
+          root.style.colorScheme = mode;
+        } else {
+          localStorage.removeItem(key);
+          delete root.dataset.theme;
+          root.style.colorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+      } catch {}
+      updateButtons(mode);
+    };
+    const updateButtons = (mode = getMode()) => {
+      toggles.forEach((toggle) => {
+        toggle.querySelectorAll("[data-theme-value]").forEach((button) => {
+          const active = button.getAttribute("data-theme-value") === mode;
+          button.setAttribute("aria-pressed", String(active));
+          button.classList.toggle("bg-primary", active);
+          button.classList.toggle("text-primary-foreground", active);
+          button.classList.toggle("text-muted-foreground", !active);
+        });
+      });
+    };
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-theme-value]");
+        if (button) setMode(button.getAttribute("data-theme-value"));
+      });
+    });
+    updateButtons();
+  })();
+</script>

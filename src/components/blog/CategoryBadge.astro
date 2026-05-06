@@ -5,4 +5,4 @@ interface Props { slug: string }
 const { slug } = Astro.props;
 const category = getCategory(slug);
 ---
-{category && <a href={getCategoryUrl(slug)} class="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-800 ring-1 ring-inset ring-sky-200">{category.name}</a>}
+{category && <a href={getCategoryUrl(slug)} class="inline-flex rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground transition hover:bg-accent hover:text-accent-foreground">{category.name}</a>}

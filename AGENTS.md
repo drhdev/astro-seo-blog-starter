@@ -134,3 +134,37 @@ npm run guard:no-react
 ```
 
 Fix build errors before reporting completion.
+
+## Theme system and monochrome design
+
+The starter uses a minimal black/white theme system inspired by shadcn/ui, implemented natively with Astro and Tailwind.
+
+Do not install:
+
+- `shadcn/ui`
+- React
+- Radix UI
+- `lucide-react`
+- client-side UI frameworks
+- hydration directives
+
+Theme requirements:
+
+- Support system, light and dark modes.
+- System is the default.
+- Explicit light/dark preferences are stored in `localStorage.theme`.
+- System mode removes the stored preference and removes the `data-theme` attribute from `<html>`.
+- Forced light uses `<html data-theme="light">`.
+- Forced dark uses `<html data-theme="dark">`.
+- Use a tiny inline `ThemeScript.astro` in the document head to reduce flash of wrong theme.
+- Use `ThemeToggle.astro` for an accessible three-option control.
+- No JS framework is allowed for theming.
+
+Styling requirements:
+
+- Use semantic CSS variables in `src/styles/global.css`.
+- Use Tailwind v4 `@theme inline` mappings for `bg-background`, `text-foreground`, `bg-card`, `border-border`, `text-muted-foreground`, `bg-primary`, and related utilities.
+- Keep the design almost monochrome: black, white and neutral grays only.
+- Avoid colorful gradients, glassmorphism, heavy shadows and visual noise.
+- Use spacing, typography, border, radius and contrast instead of decorative color.
+- Preserve all SEO, RSS, sitemap, blog, category, Docker and Coolify functionality when restyling.

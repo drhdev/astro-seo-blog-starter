@@ -19,7 +19,7 @@ const { page, category } = Astro.props;
 <BaseLayout title={`${category.name} Seite ${page.currentPage}`} description={`Archivseite ${page.currentPage} der Kategorie ${category.name}.`} canonical={page.currentPage === 1 ? `/categories/${category.slug}/` : `/categories/${category.slug}/page/${page.currentPage}/`}>
   <section class="py-16 sm:py-24">
     <Container>
-      <h1 class="text-4xl font-semibold tracking-tight text-slate-950">{category.name} Seite {page.currentPage}</h1>
+      <h1 class="text-4xl font-semibold tracking-tight text-foreground">{category.name} Seite {page.currentPage}</h1>
       <div class="mt-12"><PostList posts={page.data} /></div>
       <nav class="mt-12 flex justify-between text-sm font-semibold" aria-label="Pagination">
         {page.url.prev ? <a href={page.url.prev}>Neuere Beiträge</a> : <span />}

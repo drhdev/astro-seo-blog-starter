@@ -38,10 +38,10 @@ const jsonLd = [
     <Container class="max-w-4xl">
       <Breadcrumbs items={breadcrumbs} />
       <header class="mt-10">
-        <p class="text-sm font-semibold text-sky-700">{category?.name}</p>
-        <h1 class="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">{post.data.title}</h1>
-        <p class="mt-6 text-lg leading-8 text-slate-600">{post.data.description}</p>
-        <div class="mt-6 flex flex-wrap gap-4 text-sm text-slate-500">
+        <p class="text-sm font-medium text-muted-foreground">{category?.name}</p>
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">{post.data.title}</h1>
+        <p class="mt-6 text-lg leading-8 text-muted-foreground">{post.data.description}</p>
+        <div class="mt-6 flex flex-wrap gap-4 text-sm text-muted-foreground">
           <time datetime={post.data.publishedAt.toISOString()}>Veröffentlicht: {post.data.publishedAt.toLocaleDateString("de-DE")}</time>
           {post.data.updatedAt && post.data.updatedAt > post.data.publishedAt && <time datetime={post.data.updatedAt.toISOString()}>Aktualisiert: {post.data.updatedAt.toLocaleDateString("de-DE")}</time>}
         </div>
@@ -55,9 +55,9 @@ const jsonLd = [
     </Container>
   </article>
   {related.length > 0 && (
-    <section class="border-t border-slate-200 bg-slate-50 py-16">
+    <section class="border-t border-border bg-muted/35 py-16">
       <Container>
-        <h2 class="text-2xl font-semibold tracking-tight text-slate-950">Ähnliche Beiträge</h2>
+        <h2 class="text-2xl font-semibold tracking-tight text-foreground">Ähnliche Beiträge</h2>
         <div class="mt-8">
           <PostList posts={related} />
         </div>

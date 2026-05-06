@@ -58,3 +58,20 @@ Use this before every new website deployment.
 - [ ] `docker compose build` passes.
 - [ ] `docker compose up` serves the site locally.
 - [ ] No React, Vue, Svelte, Solid, Preact, shadcn/ui or Next.js dependency exists.
+
+## Theme deployment checklist
+
+Before deploying a new site, verify:
+
+- [ ] Light mode works.
+- [ ] Dark mode works.
+- [ ] System mode follows `prefers-color-scheme`.
+- [ ] Forced light overrides a dark system preference.
+- [ ] Forced dark overrides a light system preference.
+- [ ] Theme preference persists after reload.
+- [ ] System mode removes the stored preference.
+- [ ] There is no obvious flash of the wrong theme.
+- [ ] All pages use semantic tokens, not old `slate`/`sky` brand colors for core UI.
+- [ ] Open Graph images still have enough contrast in link previews.
+- [ ] `npm run build` passes after theme changes.
+- [ ] `npm run guard:no-react` still passes.

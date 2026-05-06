@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import PostList from "../../components/blog/PostList.astro";
+import { getPublishedPosts, POSTS_PER_PAGE } from "../../utils/blog";
+const posts = (await getPublishedPosts()).slice(0, POSTS_PER_PAGE);
+---
+<BaseLayout title="Blog" description="Alle aktuellen Beiträge zu Astro, SEO, Performance, Design Systems, Content Strategy und Automation." canonical="/blog/">
+  <section class="py-16 sm:py-24">
+    <Container>
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Blog</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">Demo-Beiträge für einen SEO-freundlichen Astro Content Hub.</p>
+      <div class="mt-12"><PostList posts={posts} /></div>
+    </Container>
+  </section>
+</BaseLayout>

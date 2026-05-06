@@ -1,0 +1,31 @@
+{
+  "name": "astro-seo-blog-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check && node scripts/check-no-react.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "guard:no-react": "node scripts/check-no-react.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "@astrojs/rss": "latest",
+    "@astrojs/sitemap": "latest",
+    "@tailwindcss/vite": "latest",
+    "astro": "^6.2.0",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "prettier-plugin-astro": "latest"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

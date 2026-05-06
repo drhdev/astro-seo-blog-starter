@@ -1,0 +1,38 @@
+---
+import "../styles/global.css";
+import SiteHeader from "../components/site/SiteHeader.astro";
+import SiteFooter from "../components/site/SiteFooter.astro";
+import SeoHead from "../components/seo/SeoHead.astro";
+import JsonLd from "../components/seo/JsonLd.astro";
+import { websiteJsonLd } from "../utils/seo";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
+  jsonLd?: unknown[];
+  noindex?: boolean;
+}
+
+const { title, description, canonical, ogType, ogImage, ogImageAlt, jsonLd = [], noindex } = Astro.props;
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SeoHead title={title} description={description} canonical={canonical} ogType={ogType} ogImage={ogImage} ogImageAlt={ogImageAlt} noindex={noindex} />
+    <JsonLd data={websiteJsonLd()} />
+    {jsonLd.map((data) => <JsonLd data={data} />)}
+  </head>
+  <body>
+    <SiteHeader />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

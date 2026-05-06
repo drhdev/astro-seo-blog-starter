@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Container from "../../../components/ui/Container.astro";
+import PostList from "../../../components/blog/PostList.astro";
+import { getPublishedPosts, POSTS_PER_PAGE } from "../../../utils/blog";
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getPublishedPosts();
+  return paginate(posts, { pageSize: POSTS_PER_PAGE });
+}
+
+const { page } = Astro.props;
+---
+<BaseLayout title={`Blog Seite ${page.currentPage}`} description={`Blog Archiv Seite ${page.currentPage} mit weiteren Beiträgen.`} canonical={page.currentPage === 1 ? "/blog/" : `/blog/page/${page.currentPage}/`}>
+  <section class="py-16 sm:py-24">
+    <Container>
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-950">Blog Seite {page.currentPage}</h1>
+      <div class="mt-12"><PostList posts={page.data} /></div>
+      <nav class="mt-12 flex justify-between text-sm font-semibold" aria-label="Pagination">
+        {page.url.prev ? <a href={page.url.prev}>Neuere Beiträge</a> : <span />}
+        {page.url.next && <a href={page.url.next}>Ältere Beiträge</a>}
+      </nav>
+    </Container>
+  </section>
+</BaseLayout>

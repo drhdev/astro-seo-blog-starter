@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: white;
+  color: #0f172a;
+}
+
+:focus-visible {
+  outline: 2px solid #0f172a;
+  outline-offset: 3px;
+}
+
+.prose-content :where(h2) {
+  margin-top: 2.5rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.prose-content :where(h3) {
+  margin-top: 2rem;
+  font-size: 1.375rem;
+  line-height: 1.85rem;
+  font-weight: 650;
+}
+
+.prose-content :where(p) {
+  margin-top: 1rem;
+  color: #475569;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.prose-content :where(a) {
+  color: #0369a1;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-content :where(ul, ol) {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+  color: #475569;
+}
+
+.prose-content :where(li) {
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}

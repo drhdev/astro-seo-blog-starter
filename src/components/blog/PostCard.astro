@@ -1,0 +1,23 @@
+---
+import type { BlogPost } from "../../utils/blog";
+import { getPostUrl } from "../../utils/blog";
+import CategoryBadge from "./CategoryBadge.astro";
+import FeaturedImage from "./FeaturedImage.astro";
+interface Props { post: BlogPost }
+const { post } = Astro.props;
+---
+<article class="group overflow-hidden rounded-3xl border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg">
+  <a href={getPostUrl(post)} aria-label={`Artikel lesen: ${post.data.title}`}>
+    <FeaturedImage src={post.data.featuredImage} alt={post.data.featuredImageAlt} class="rounded-none" />
+  </a>
+  <div class="p-6">
+    <div class="flex items-center gap-3">
+      <CategoryBadge slug={post.data.category} />
+      <time class="text-xs text-slate-500" datetime={post.data.publishedAt.toISOString()}>{post.data.publishedAt.toLocaleDateString("de-DE")}</time>
+    </div>
+    <h2 class="mt-4 text-xl font-semibold tracking-tight text-slate-950">
+      <a class="hover:text-sky-700" href={getPostUrl(post)}>{post.data.title}</a>
+    </h2>
+    <p class="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{post.data.description}</p>
+  </div>
+</article>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import Container from "../../../../components/ui/Container.astro";
+import PostList from "../../../../components/blog/PostList.astro";
+import { categories } from "../../../../data/categories";
+import { getPostsByCategory, POSTS_PER_PAGE } from "../../../../utils/blog";
+
+export async function getStaticPaths({ paginate }) {
+  const paths = [];
+  for (const category of categories) {
+    const posts = await getPostsByCategory(category.slug);
+    paths.push(...paginate(posts, { params: { slug: category.slug }, props: { category }, pageSize: POSTS_PER_PAGE }));
+  }
+  return paths;
+}
+
+const { page, category } = Astro.props;
+---
+<BaseLayout title={`${category.name} Seite ${page.currentPage}`} description={`Archivseite ${page.currentPage} der Kategorie ${category.name}.`} canonical={page.currentPage === 1 ? `/categories/${category.slug}/` : `/categories/${category.slug}/page/${page.currentPage}/`}>
+  <section class="py-16 sm:py-24">
+    <Container>
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-950">{category.name} Seite {page.currentPage}</h1>
+      <div class="mt-12"><PostList posts={page.data} /></div>
+      <nav class="mt-12 flex justify-between text-sm font-semibold" aria-label="Pagination">
+        {page.url.prev ? <a href={page.url.prev}>Neuere Beiträge</a> : <span />}
+        {page.url.next && <a href={page.url.next}>Ältere Beiträge</a>}
+      </nav>
+    </Container>
+  </section>
+</BaseLayout>

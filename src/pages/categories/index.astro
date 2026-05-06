@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import { getAllCategoriesWithCounts, getCategoryUrl } from "../../utils/blog";
+import { collectionPageJsonLd } from "../../utils/seo";
+const categories = await getAllCategoriesWithCounts();
+---
+<BaseLayout title="Kategorien" description="Übersicht aller Blog-Kategorien mit Beiträgen zu Astro, SEO, Design Systems, Performance, Content Strategy und Automation." canonical="/categories/" jsonLd={[collectionPageJsonLd({ title: "Kategorien", description: "Übersicht aller Blog-Kategorien.", url: "/categories/" })]}>
+  <section class="py-16 sm:py-24">
+    <Container>
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Kategorien</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">Sechs Beispielkategorien mit jeweils drei Demo-Beiträgen.</p>
+      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {categories.map((category) => (
+          <article class="rounded-3xl border border-slate-200 bg-white p-7">
+            <h2 class="text-xl font-semibold text-slate-950"><a href={getCategoryUrl(category.slug)}>{category.name}</a></h2>
+            <p class="mt-3 text-sm leading-6 text-slate-600">{category.description}</p>
+            <p class="mt-5 text-sm font-semibold text-sky-700">{category.count} Beiträge</p>
+          </article>
+        ))}
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

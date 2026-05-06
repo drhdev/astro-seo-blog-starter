@@ -1,0 +1,2 @@
+Astro SEO Blog Starter
+Built with Astro, Tailwind CSS, semantic HTML, RSS, sitemap and Docker.

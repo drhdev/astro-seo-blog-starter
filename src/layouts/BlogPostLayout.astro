@@ -1,0 +1,67 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/blog/Breadcrumbs.astro";
+import FeaturedImage from "../components/blog/FeaturedImage.astro";
+import PostList from "../components/blog/PostList.astro";
+import Container from "../components/ui/Container.astro";
+import type { BlogPost } from "../utils/blog";
+import { getCategory } from "../data/categories";
+import { articleJsonLd, breadcrumbJsonLd } from "../utils/seo";
+import { getCategoryUrl, getPostUrl, getRelatedPosts, getPublishedPosts } from "../utils/blog";
+
+interface Props { post: BlogPost }
+const { post } = Astro.props;
+const category = getCategory(post.data.category);
+const related = getRelatedPosts(post, await getPublishedPosts());
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Blog", href: "/blog/" },
+  { name: category?.name || post.data.category, href: getCategoryUrl(post.data.category) },
+  { name: post.data.title, href: getPostUrl(post) },
+];
+const imageUrl = post.data.featuredImage.src;
+const jsonLd = [
+  breadcrumbJsonLd(breadcrumbs),
+  articleJsonLd({
+    title: post.data.title,
+    description: post.data.description,
+    url: getPostUrl(post),
+    image: imageUrl,
+    datePublished: post.data.publishedAt,
+    dateModified: post.data.updatedAt,
+    author: post.data.author,
+  }),
+];
+---
+<BaseLayout title={post.data.title} description={post.data.description} canonical={getPostUrl(post)} ogType="article" ogImage={imageUrl} ogImageAlt={post.data.featuredImageAlt} jsonLd={jsonLd}>
+  <article class="py-12 sm:py-16">
+    <Container class="max-w-4xl">
+      <Breadcrumbs items={breadcrumbs} />
+      <header class="mt-10">
+        <p class="text-sm font-semibold text-sky-700">{category?.name}</p>
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">{post.data.title}</h1>
+        <p class="mt-6 text-lg leading-8 text-slate-600">{post.data.description}</p>
+        <div class="mt-6 flex flex-wrap gap-4 text-sm text-slate-500">
+          <time datetime={post.data.publishedAt.toISOString()}>Veröffentlicht: {post.data.publishedAt.toLocaleDateString("de-DE")}</time>
+          {post.data.updatedAt && post.data.updatedAt > post.data.publishedAt && <time datetime={post.data.updatedAt.toISOString()}>Aktualisiert: {post.data.updatedAt.toLocaleDateString("de-DE")}</time>}
+        </div>
+      </header>
+      <div class="mt-10">
+        <FeaturedImage src={post.data.featuredImage} alt={post.data.featuredImageAlt} loading="eager" />
+      </div>
+      <div class="prose-content mt-12">
+        <slot />
+      </div>
+    </Container>
+  </article>
+  {related.length > 0 && (
+    <section class="border-t border-slate-200 bg-slate-50 py-16">
+      <Container>
+        <h2 class="text-2xl font-semibold tracking-tight text-slate-950">Ähnliche Beiträge</h2>
+        <div class="mt-8">
+          <PostList posts={related} />
+        </div>
+      </Container>
+    </section>
+  )}
+</BaseLayout>

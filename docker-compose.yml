@@ -1,0 +1,22 @@
+services:
+  astro-site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:?Set the public production URL, for example https://example.com}
+        PUBLIC_SITE_NAME: ${PUBLIC_SITE_NAME:-Astro SEO Blog Starter}
+        PUBLIC_SITE_LOCALE: ${PUBLIC_SITE_LOCALE:-de-DE}
+        PUBLIC_SITE_AUTHOR: ${PUBLIC_SITE_AUTHOR:-Editorial Team}
+    image: ${COMPOSE_PROJECT_NAME:-astro-seo-blog-starter}:latest
+    restart: unless-stopped
+    expose:
+      - "8080"
+    environment:
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz/ >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

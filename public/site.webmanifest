@@ -1,0 +1,8 @@
+{
+  "name": "Astro SEO Blog Starter",
+  "short_name": "Astro Starter",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a"
+}
